@@ -1,21 +1,28 @@
-const Schema = require('mongoose').Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+require('./category');
 
 const shopsSchema = new Schema({
-    name: {type: String, required: true},
-    description: String,
-    categories: [{
+    name: {type: String, required: true, unique: true},
+    information: String,
+    category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
-    }],
+    },
     image: String,
     link: String,
     rate: Number,
-    pocOwned: Boolean,
-    reviews: {
-        user: {type: Schema.Types.ObjectId, ref: 'User'},
+    user: {type: String, required: true},
+    pocOwned: {type: Boolean, required: true},
+    reviews: [{
+        user: String,
         comment: String,
         rating: Number
-    }
+    }],
+    location: {city: String, state: String},
 },{
     timestamps: true
 })
+
+module.exports = mongoose.model('Shop', shopsSchema)
