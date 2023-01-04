@@ -8,4 +8,5 @@ router.get('/category/:id', shopsCtrl.category);
 router.get('/:id', shopsCtrl.show);
 
 
+
 module.exports = router;

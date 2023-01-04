@@ -6,11 +6,12 @@ module.exports = {
     index,
     category,
     show,
+    location,
 };
 
 async function index(req,res){
     try{
-        const shops = await Shop.find({});
+        const shops = await Shop.find({}).sort({createdAt: 'desc'});
         const categories = await Category.find({});
         res.status(200).json({shops, categories});
     }catch(err){
