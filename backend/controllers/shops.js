@@ -6,7 +6,6 @@ module.exports = {
     index,
     category,
     show,
-    location,
 };
 
 async function index(req,res){
@@ -22,8 +21,9 @@ async function index(req,res){
 async function category(req,res){
     try{
         const shops = await Shop.find({'category': req.params.id});
+        const category = await Category.findById(req.params.id);
         
-        res.status(200).json(shops)
+        res.status(200).json({shops, category});
     }catch(err){
         res.status(400).json({msg: err.message})
     }
