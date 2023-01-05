@@ -13,7 +13,7 @@ const shopsSchema = new Schema({
     image: String,
     link: String,
     rate: Number,
-    user: {type: String, required: true},
+    user: {type: Schema.Types.ObjectId, ref:'User'},
     pocOwned: {type: Boolean, required: true},
     reviews: [{
         user: String,

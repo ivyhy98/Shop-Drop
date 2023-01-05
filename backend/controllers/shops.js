@@ -6,6 +6,8 @@ module.exports = {
     index,
     category,
     show,
+    newShop,
+    updateShop,
 };
 
 async function index(req,res){
@@ -34,7 +36,25 @@ async function show(req,res){
         const shop = await Shop.findById(req.params.id);
         res.status(200).json(shop);
     }catch(err){
-        res.status(400).json({msg: err.message})
+        res.status(400).json({msg: err.message});
+    }
+}
+
+async function newShop(req,res){
+    try{
+        const shop = await Shop.create(req.body);
+        res.status(200).json(shop);
+    }catch(err){
+        res.status(400).json({msg: err.message});
+    }
+};
+
+async function updateShop(req,res){
+    try{
+        const shop = await Shop.findOneAndUpdate(req.params.id, req.body);
+        res.status(200).json(shop);
+    }catch(err){
+        res.status(400).json({msg: err.message});
     }
 }
 

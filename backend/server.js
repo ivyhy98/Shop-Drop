@@ -1,7 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
-const path = require('path')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const ensureLoggedIn = require("./config/ensureLoggedIn");
+
 require('./config/database');
 require('dotenv').config();
 
@@ -16,10 +17,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 //==== Routes ====
-app.get('/api',(req,res)=>{
-    res.send('Hello');
-})
 
+app.use("/api/users", require("./routes/users"));
 app.use('/api/shops', require('./routes/shops'));
 
 
