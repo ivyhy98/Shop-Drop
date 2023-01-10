@@ -42,7 +42,8 @@ async function show(req,res){
 
 async function newShop(req,res){
     try{
-        const shop = await Shop.create(req.body);
+        const shop = await Shop.create(req.body)
+        const user = await User.findOneAndUpdate(req.body.user, {shopsCreated: [shop]});
         res.status(200).json(shop);
     }catch(err){
         res.status(400).json({msg: err.message});
