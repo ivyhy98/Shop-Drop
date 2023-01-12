@@ -16,7 +16,7 @@ const shopsSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref:'User'},
     pocOwned: {type: Boolean, required: true},
     reviews: [{
-        user: String,
+        user: { type: Schema.Types.ObjectId, ref: 'User'},
         comment: String,
         rating: Number
     }],
@@ -24,5 +24,15 @@ const shopsSchema = new Schema({
 },{
     timestamps: true
 })
+
+shopsSchema.virtual('rating').get(function(){
+    const all = this.reviews.ratings.reduce((total, rating) => total + rating, 0);
+    return (all / this.reviews.length); //ratings out of 5 stars
+})
+
+shopsSchema.methods.addReview = function(review){
+    this.reviews.push(review);
+   return this.save();
+ }
 
 module.exports = mongoose.model('Shop', shopsSchema)
